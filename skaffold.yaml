@@ -1,0 +1,21 @@
+apiVersion: skaffold/v2beta29
+kind: Config
+deploy: 
+  kubectl:
+    manifests:
+      - ./infra/k8s/*
+    flags:
+      disableValidation: true
+build:
+  local:
+    push: false
+  artifacts:
+    - image: suvendev3/auth
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+            
